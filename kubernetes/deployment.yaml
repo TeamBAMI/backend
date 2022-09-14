@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bami-backend
+  namespace: bami
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: bami-backend
+  template:
+    metadata:
+      labels:
+        app: bami-backend
+    spec:
+      containers:
+        - name: bami-backend
+          image: ghcr.io/teambami/backend:master
+          imagePullPolicy: Always
+          ports:
+            - name: web
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: django
+                  key: secret
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "10m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
