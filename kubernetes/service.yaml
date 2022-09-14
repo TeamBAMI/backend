@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bami-backend
+  namespace: bami
+spec:
+  selector:
+    app: bami-backend
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: web

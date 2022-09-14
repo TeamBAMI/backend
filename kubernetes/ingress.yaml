@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: bami
+  name: bami-backend
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: bami-backend.preview.marnixah.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: bami-backend
+                port:
+                  number: 8000
