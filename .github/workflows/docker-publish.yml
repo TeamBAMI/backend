@@ -91,11 +91,13 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
+      - name: Add kubernetes.default.svc to /etc/hosts
+        run: echo "86.88.160.115 kubernetes.default.svc" | sudo tee -a /etc/hosts
       - name: Set the Kubernetes context
         uses: azure/k8s-set-context@v2
         with:
           method: service-account
-          k8s-url: https://kpn.marnixah.com:6443
+          k8s-url: https://kubernetes.default.svc:6443
           k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
 
       - name: Checkout source code
@@ -104,7 +106,7 @@ jobs:
       - name: Deploy to the Kubernetes cluster
         uses: azure/k8s-deploy@v1
         with:
-          namespace: default
+          namespace: bami
           manifests: |
             kubernetes/deployment.yaml
             kubernetes/ingress.yaml
