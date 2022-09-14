@@ -25,7 +25,9 @@ SECRET_KEY = "django-insecure-i&lk(dy!_h(y7^!o%d8-rza+u4mk(69u!cy!rc&2%y3(1zna5d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "bami-backend.preview.marnixah.com"
+]
 
 
 # Application definition
