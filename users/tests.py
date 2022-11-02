@@ -1,3 +1,4 @@
+import json
 from django.test import TestCase
 
 # Create your tests here.
@@ -75,3 +76,29 @@ class UserTestCase(TestCase):
             },
         )
         self.assertEqual(response.status_code, 400)
+
+    def test_get_self(self):
+        self.client.post(
+            "/users/",
+            good_user_create_dto,
+        )
+        response = self.client.post(
+            "/api-token-auth/",
+            {
+                "username": good_user_create_dto["username"],
+                "password": good_user_create_dto["password"],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        token = json.loads(response.content)["token"]
+        response = self.client.get(
+            "/logged_in_user",
+            HTTP_AUTHORIZATION=f"Token {token}",
+        )
+        self.assertEqual(response.status_code, 200)
+        user = json.loads(response.content)
+        self.assertEqual(user["username"], good_user_create_dto["username"])
+        self.assertEqual(user["email"], good_user_create_dto["email"])
+        self.assertEqual(user["type"], good_user_create_dto["type"])
+        # Make sure password is not returned
+        self.assertNotIn("password", user)

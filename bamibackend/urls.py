@@ -6,7 +6,6 @@ from rest_framework.authtoken import views
 
 router = routers.DefaultRouter()
 router.register(r"users", user_views.UserViewSet)
-router.register(r"groups", user_views.GroupViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
