@@ -25,6 +25,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         validated_data["password"] = make_password(validated_data.get("password"))
         return super(UserSerializer, self).create(validated_data)
 
+    # Don't return the password in the response
+    def to_representation(self, instance):
+        representation = super(UserSerializer, self).to_representation(instance)
+        representation.pop("password")
+        return representation
+
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
