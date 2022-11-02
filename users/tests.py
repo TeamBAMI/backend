@@ -20,7 +20,10 @@ class UserTestCase(TestCase):
 
     def test_user_list(self):
         response = self.client.get("/users/")
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 200)
+        # Make sure an array is returned
+        response_json = json.loads(response.content)
+        self.assertIsInstance(response_json["results"], list)
 
     def test_user_create(self):
         response = self.client.post(
@@ -92,7 +95,7 @@ class UserTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         token = json.loads(response.content)["token"]
         response = self.client.get(
-            "/logged_in_user",
+            "/users/me/",
             HTTP_AUTHORIZATION=f"Token {token}",
         )
         self.assertEqual(response.status_code, 200)
