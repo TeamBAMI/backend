@@ -8,7 +8,7 @@ from users.models import User
 good_user_create_dto = {
     "username": "test",
     "email": "test@example.com",
-    "password": "testpassword",
+    "password": "PCcLFEMb2ubgkT",
     "type": "STUDENT",
 }
 
@@ -44,6 +44,34 @@ class UserTestCase(TestCase):
             {
                 **good_user_create_dto,
                 "type": "APPROVED_BUSINESS",
+            },
+        )
+        self.assertEqual(response.status_code, 400)
+
+    def test_user_signin(self):
+        self.client.post(
+            "/users/",
+            good_user_create_dto,
+        )
+        response = self.client.post(
+            "/api-token-auth/",
+            {
+                "username": good_user_create_dto["username"],
+                "password": good_user_create_dto["password"],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_signin_bad_password(self):
+        self.client.post(
+            "/users/",
+            good_user_create_dto,
+        )
+        response = self.client.post(
+            "/api-token-auth/",
+            {
+                "username": good_user_create_dto["username"],
+                "password": "BAD PASSWORD",
             },
         )
         self.assertEqual(response.status_code, 400)
