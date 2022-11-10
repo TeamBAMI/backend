@@ -100,3 +100,5 @@ jobs:
             kubernetes/service.yaml
           images: |
             ghcr.io/username/package:${{ github.sha }}
+      - name: rollout restart
+        run: kubectl rollout restart deployment/bami-backend
