@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by("-date_joined")
     serializer_class = UserSerializer
-    renderer_classes = (renderers.JSONRenderer,)
 
     @action(
         detail=False, methods=["get"], permission_classes=[permissions.IsAuthenticated]
