@@ -25,7 +25,19 @@ SECRET_KEY = "django-insecure-i&lk(dy!_h(y7^!o%d8-rza+u4mk(69u!cy!rc&2%y3(1zna5d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["bami-backend.preview.marnixah.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "bami-backend.preview.marnixah.com",
+    "localhost",
+    "127.0.0.1",
+    "0.0.0.0",
+    "10.0.2.134",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "https://bami-backend.preview.marnixah.com",
+]
 
 
 # Application definition
